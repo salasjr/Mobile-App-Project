@@ -1,4 +1,4 @@
-# Project Title : ** የባህል ሃኪም አገናኝ **
+# Project Title :  # የባህል ሃኪም አገናኝ 
 
 This app is designed to connect ** Traditional Doctor ** with users in a seamless and efficient way. With this app, users can Filter for ** Traditional Doctors ** based on their rating, and location. They can then navigate through the possible options of a ** Traditional Doctors ** and schedule an appointment with just a few clicks. 
 
