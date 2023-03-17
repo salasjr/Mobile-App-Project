@@ -1,4 +1,8 @@
-| Column 1 | Column 2 | Column 3 |
-| -------- | -------- | -------- |
-| Row 1, Column 1 | Row 1, Column 2 | Row 1, Column 3 |
-| Row 2, Column 
+|   Members Name      |  Section |  Id No       |
+| --------------------| -------- | ------------ |
+| Betselot Kidane     |     4    | UGR/8473/13  |
+| Salahadin Juhar     |     2    | UGR/8613/13  |
+| Surafel Workayehu   |     1    | UGR/9701/13  |
+| Fikremariam Anteneh |     4    | UGR/9301/13  |
+| Yohannes Desta      |     1    | UGR/1364/13  |
+
