@@ -6,11 +6,13 @@ class LoginState extends Equatable {
   final String phoneNumber;
   final String password;
   final LoginStatus status;
+  final User user;
 
   const LoginState({
     required this.phoneNumber,
     required this.password,
     required this.status,
+    this.user = User.empty,
   });
 
   factory LoginState.initial() {
@@ -25,11 +27,13 @@ class LoginState extends Equatable {
     String? phoneNumber,
     String? password,
     LoginStatus? status,
+    User? user,
   }) {
     return LoginState(
       phoneNumber: phoneNumber ?? this.phoneNumber,
       password: password ?? this.password,
       status: status ?? this.status,
+      user: user ?? this.user,
     );
   }
 
