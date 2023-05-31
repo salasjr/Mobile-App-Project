@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../domain/user_dto.dart';
 import '../../../../infrustructure/repository/auth_repository.dart';
 part 'signup_state.dart';
 
@@ -104,7 +105,7 @@ class SignupCubit extends Cubit<SignupState> {
     if (state.status == SignupStatus.submitting) return;
     emit(state.copyWith(status: SignupStatus.submitting));
     try {
-      await _authRepository.signup(
+      User? user = await _authRepository.signup(
         phoneNumber: state.phoneNumber,
         password: state.password,
         question: state.question,
@@ -116,7 +117,10 @@ class SignupCubit extends Cubit<SignupState> {
         address: state.address,
         role: state.role,
       );
-      emit(state.copyWith(status: SignupStatus.success));
+
+      if (user != null) {
+        emit(state.copyWith(status: SignupStatus.success));
+      }
     } catch (_) {}
   }
 }
