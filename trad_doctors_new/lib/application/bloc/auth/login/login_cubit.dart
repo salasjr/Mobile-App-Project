@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:trad_doctors_new/domain/models.dart';
 import '../../../../infrustructure/repository/auth_repository.dart';
 part 'login_state.dart';
 
@@ -30,11 +31,20 @@ class LoginCubit extends Cubit<LoginState> {
     if (state.status == LoginStatus.submitting) return;
     emit(state.copyWith(status: LoginStatus.submitting));
     try {
-      await _authRepository.logInWithPhoneAndPassword(
+      User user = await _authRepository.logInWithPhoneAndPassword(
         phoneNumber: state.phoneNumber,
         password: state.password,
       );
-      emit(state.copyWith(status: LoginStatus.success));
+      if (user != User.empty) {
+        emit(state.copyWith(status: LoginStatus.success, user: user));
+        return;
+      }
+      // emit(state.copyWith(status: LoginStatus.error));
     } catch (_) {}
+  }
+
+  Future<void> logout() async {
+    await _authRepository.removeCachedUser();
+    emit(LoginState.initial());
   }
 }
