@@ -1,9 +1,15 @@
 const express = require("express");
 const profileRouter = express.Router();
-const {} = require("../controllers/profile/profileExporter");
+const {
+  updateProfile,
+  deleteAccount,
+  changePassword,
+} = require("../controllers/profile/profileExporter");
 
-// get user data
-profileRouter.get("/---", () => {});
-profileRouter.get("/---", () => {});
+profileRouter.put("/update", updateProfile);
+
+profileRouter.put("/update/changepassword:profileId", changePassword);
+
+profileRouter.delete("/delete/:profileId", deleteAccount);
 
 module.exports = profileRouter;

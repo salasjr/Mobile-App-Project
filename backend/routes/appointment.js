@@ -12,10 +12,10 @@ const {
 
 appointmentRouter.post("/createappointment", createAppointment);
 
-appointmentRouter.get("/patient/:patientId/", getAppointmentsByPatient);
+appointmentRouter.get("/patient/:patientId", getAppointmentsByPatient);
 
 appointmentRouter.get(
-  "/doctor/:doctorId/appointments/",
+  "/doctor/:doctorId",
   getAppointmentsByDoctor
 );
 
