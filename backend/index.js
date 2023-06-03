@@ -13,9 +13,10 @@ const authRouter = require("./routes/auth");
 const appointmentRouter = require("./routes/appointment");
 const userRouter = require("./routes/user");
 const profileRouter = require("./routes/profile");
-
+const serviceRouter = require("./routes/service");
 //! middle ware imports
 const { authorized } = require("./middleware/auth");
+
 
 //! Global Middle-wares
 app.use(
@@ -33,6 +34,7 @@ app.use("/auth", authRouter);
 app.use(authorized);
 app.use("/user", userRouter);
 app.use("/appointment", appointmentRouter);
+app.use("/service", serviceRouter);
 app.use("/profile", profileRouter);
 
 //! Start Express server
