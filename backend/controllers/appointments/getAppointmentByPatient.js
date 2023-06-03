@@ -11,7 +11,32 @@ const getAppointmentsByPatient = (req, res) => {
       console.error(error);
       res.status(500).send("Error fetching appointments");
     } else {
-      res.status(200).send(results);
+      let n = results.length;
+      let counter = 0;
+
+      for (let i = 0; i < n; i++) {
+        let doctor_id = results[i]["doctor_id"];
+        let newQuery = "SELECT * FROM doctor WHERE id = ?";
+
+        connection.query(newQuery, [doctor_id], (error, row) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Error fetching doctor details");
+          } else {
+            results[i]["fullname"] = row[0]["fullname"];
+            results[i]["phoneNumber"] = row[0]["phoneNumber"];
+            results[i]["profilePicture"] = row[0]["profilePicture"];
+            results[i]["address"] = row[0]["address"];
+
+            counter++;
+            if (counter === n) {
+              // All doctor details have been fetched
+              console.log("Appointments:", results);
+              res.status(200).send(results);
+            }
+          }
+        });
+      }
     }
   });
 };

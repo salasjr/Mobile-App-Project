@@ -5,7 +5,6 @@ const connection = require("../../config/dbconnection");
 
 const changePassword = async (req, res) => {
   try {
-    console.log("----------------", req.body);
     const profileId = req.params.profileId;
     const { oldPassword, newPassword } = req.body;
 

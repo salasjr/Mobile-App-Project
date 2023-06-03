@@ -4,19 +4,37 @@ const connection = require("../../config/dbconnection");
 
 const getAppointmentsByDoctor = (req, res) => {
   const doctorId = req.params.doctorId;
-  const status = req.query.status;
 
-  if (!status) {
-    return res.status(400).send("Missing required fields");
-  }
-
-  const query = "SELECT * FROM appointments WHERE doctor_id = ? and status=?";
-  connection.query(query, [doctorId, status], (error, results, fields) => {
+  const query = "SELECT * FROM appointments WHERE doctor_id = ?";
+  connection.query(query, [doctorId], (error, results, fields) => {
     if (error) {
       console.error(error);
       res.status(500).send("Error fetching appointments");
     } else {
-      res.status(200).send(results);
+      let n = results.length;
+      let counter = 0;
+
+      for (let i = 0; i < n; i++) {
+        let patient_id = results[i]["patient_id"];
+        let newQuery = "SELECT * FROM patient WHERE id = ?";
+
+        connection.query(newQuery, [patient_id], (error, row) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Error fetching doctor details");
+          } else {
+            results[i]["fullname"] = row[0]["fullname"];
+            results[i]["phoneNumber"] = row[0]["phoneNumber"];
+            results[i]["profilePicture"] = row[0]["profilePicture"];
+            results[i]["address"] = row[0]["address"];
+
+            counter++;
+            if (counter === n) {
+              res.status(200).send(results);
+            }
+          }
+        });
+      }
     }
   });
 };

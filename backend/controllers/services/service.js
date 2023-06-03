@@ -4,13 +4,14 @@ const connection = require("../../config/dbconnection");
 
 const getServiceById = async (req, res) => {
   const id = req.header("id");
+  console.log("----", id);
   try {
-    const query = `SELECT * FROM service WHERE doctor_id = '${Number(id)}'`;
+    const query = `SELECT * FROM service WHERE doctor_id = '${id}'`;
     connection.query(query, async (err, result) => {
       if (err) {
         throw err;
       }
-
+      console.log(result);
       return res.status(200).json(result);
     });
   } catch (e) {
@@ -19,6 +20,7 @@ const getServiceById = async (req, res) => {
 };
 
 const addService = async (req, res) => {
+  console.log(req.body)
   const { doctor_id, title, description, price } = req.body;
 
   try {

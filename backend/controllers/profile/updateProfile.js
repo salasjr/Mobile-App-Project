@@ -25,7 +25,7 @@ const updateProfile = (req, res) => {
             return res.status(400).json({ error: err.message });
           }
           const user = { ...result[0], role: req.role, token: req.token };
-          console.log(user);
+
           return res.status(200).json(user);
         });
       }
