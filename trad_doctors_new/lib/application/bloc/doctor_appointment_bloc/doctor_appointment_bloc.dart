@@ -21,6 +21,7 @@ class DoctorAppointmentBloc
   void _onLoadDoctorAppointment(
       LoadDoctorAppointment event, Emitter<DoctorAppointmentState> emit) async {
     try {
+      if (state is DoctorAppointmentLoaded) return;
       emit(DoctorAppointmentLoading());
 
       List<PatientAppointment> appointments = await _appointmentInterface
@@ -44,7 +45,7 @@ class DoctorAppointmentBloc
     try {
       await _appointmentInterface.updateAppointment(
           event.token, event.id, event.attribute);
-
+          
       var temp = oldData[event.indexes[0]].removeAt(event.indexes[1]);
       PatientAppointment newDate = PatientAppointment(
           profilePicture: temp.profilePicture,
@@ -56,15 +57,14 @@ class DoctorAppointmentBloc
           doctor_id: temp.doctor_id,
           status: event.attribute["status"],
           case_description: temp.case_description,
-          message: event.attribute["messsage"],
+          message: event.attribute["message"],
           rating: temp.rating);
 
       Map val = {"pending": 0, "accepted": 1, "rejected": 2, "done": 3};
-      oldData[val[event.attribute["status"]]].add(newDate);
-
+      oldData[val[1]].add(newDate);
       emit(DoctorAppointmentLoaded(appointments: oldData));
     } catch (err) {
-      emit(DoctorAppointmentLoading());
+      emit(DoctoAppointmentError());
     }
   }
 
